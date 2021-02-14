@@ -1,4 +1,4 @@
-import { Todo } from '../data/todos'
+import { Todo } from '../data'
 import { isOverdue } from './index'
 
 describe('isOverdue', () => {

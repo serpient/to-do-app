@@ -1,4 +1,4 @@
-import { ApiTodo, sortTodos } from './todos'
+import { ApiTodo, sortTodos } from './index'
 
 describe('sortTodos', () => {
   it('sorts an array of todos by overdue, normal, completed. each category is sorted by soonest duedate', () => {

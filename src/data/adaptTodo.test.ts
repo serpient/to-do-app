@@ -1,4 +1,4 @@
-import { adaptTodo, ApiTodo } from './todos'
+import { adaptTodo, ApiTodo } from './index'
 
 describe('adaptTodo', () => {
   it('wraps the incoming todo data from api', () => {

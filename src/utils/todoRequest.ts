@@ -1,4 +1,4 @@
-import { ApiTodo, ApiUpdateResponse } from '../data/todos'
+import { ApiTodo, ApiUpdateResponse } from '../data'
 import { ApiEndpoints } from './index'
 
 const API_KEY: string = process.env.REACT_APP_API_KEY || ''

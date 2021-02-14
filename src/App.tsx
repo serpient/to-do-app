@@ -9,7 +9,7 @@ import {
   AlertTitle,
   AlertDescription
 } from '@chakra-ui/react'
-import { Todos, ApiTodo, sortTodos, adaptTodo } from './data/todos'
+import { Todos, ApiTodo, sortTodos, adaptTodo } from './data'
 import { getTodosRequest, updateTodoRequest, isOverdue } from './utils'
 
 const App = () => {
@@ -64,7 +64,7 @@ const App = () => {
   return (
     <ChakraProvider>
       <div className="app-container wrapper">
-        <div className="card">
+        <div className="card" id="card">
           {error && (
             <div className="error">
               <Alert status="error">
@@ -88,7 +88,9 @@ const App = () => {
               />
             </div>
           ) : (
-            <TodoCollection todos={todos} toggleTodoCompletion={toggleTodoCompletion} />
+            <div id="card-content">
+              <TodoCollection todos={todos} toggleTodoCompletion={toggleTodoCompletion} />
+            </div>
           )}
         </div>
       </div>
@@ -122,6 +124,8 @@ const TodoCollection = ({
             }`}
             key={todo.id}
             onClick={() => toggleTodoCompletion(todo.id, todo.isComplete)}
+            role="checkbox"
+            aria-checked={todo.isComplete ? 'true' : 'false'}
           >
             {todo.isUpdating ? (
               <Spinner
