@@ -55,7 +55,7 @@ const App = () => {
         }
       })
       .catch(err => {
-        setError(err.message)
+        setError(`${err.name} - ${err.message}`)
         todos[todoId].isUpdating = false
         setTodos({ ...todos })
       })
