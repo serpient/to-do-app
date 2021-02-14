@@ -1,18 +1,18 @@
-import { formatDate } from '../utils'
+import { formatDate, isOverdue } from '../utils'
 
 export interface ApiTodo {
   id: string
   description: string
   isComplete: boolean
-  dueDate?: Date
+  dueDate?: string | null
 }
 
 export interface Todo {
   id: string
   description: string
   isComplete: boolean
-  dueDate?: Date
-  formattedDueDate?: string
+  dueDate?: string | null
+  formattedDueDate?: string | null
   isUpdating: boolean
 }
 
@@ -27,7 +27,7 @@ export interface ApiUpdateResponse {
 export const adaptTodo = (apiTodo: ApiTodo): Todo => {
   return {
     ...apiTodo,
-    formattedDueDate: apiTodo.dueDate ? formatDate(apiTodo.dueDate) : undefined,
+    formattedDueDate: apiTodo.dueDate ? formatDate(apiTodo.dueDate) : null,
     isUpdating: false
   }
 }
@@ -40,7 +40,7 @@ export const sortTodos = (todos: Todos): Todo[] => {
   Object.values(todos).forEach((todo: Todo) => {
     if (todo.isComplete) {
       completed.push(todo)
-    } else if (todo.dueDate && new Date(todo.dueDate) < new Date()) {
+    } else if (isOverdue(todo)) {
       overdue.push(todo)
     } else {
       normal.push(todo)
