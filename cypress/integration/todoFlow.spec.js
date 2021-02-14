@@ -9,7 +9,7 @@ describe('Get Todo Flow', () => {
     cy.server()
   })
 
-  it('on successful fetch, it renders sorted todos with date if available and checked if completed', () => {
+  it('shows sorted todos with date if available and checkmark if completed upon successful fetch', () => {
     cy.fixture('todos').then(todosJson => {
       cy.intercept('GET', ApiEndpoints.get(), todosJson).as('todosStub')
     })
@@ -25,7 +25,7 @@ describe('Get Todo Flow', () => {
       })
   })
 
-  it('on successful fetch, it shows a no to do message to users', () => {
+  it('shows a no todo message to users if there are no todos upon successful fetch', () => {
     cy.intercept('GET', ApiEndpoints.get(), []).as('todosStub')
 
     cy.visit('http://localhost:3000')
@@ -35,7 +35,7 @@ describe('Get Todo Flow', () => {
     cy.findByRole('heading', { name: /Nothing to do here!/i })
   })
 
-  it('on failed fetch, it displays the error message', () => {
+  it('shows an error message upon a failed fetch', () => {
     cy.intercept('GET', ApiEndpoints.get(), {
       error: { name: 'ERROR', message: 'MISSING API KEY' }
     }).as('todosStub')
@@ -92,7 +92,7 @@ describe('Update Todo Flow', () => {
       })
   })
 
-  it('renders an error message if update failed; no change occurs', () => {
+  it('shows an error message upon failed update; no change occurs', () => {
     cy.fixture('todos').then(todosJson => {
       cy.intercept('GET', ApiEndpoints.get(), todosJson).as('todosStub')
     })
