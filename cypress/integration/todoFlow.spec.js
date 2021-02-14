@@ -82,9 +82,17 @@ describe('Update Todo Flow', () => {
         expect(todos[5]).to.contain.text('Go for a walk')
         expect(todos[5].querySelector('input')).to.be.checked
       })
+
+    // can also re-toggle the todo
+    cy.findByRole('checkbox', { name: /buy cat supplies/i }).click()
+    cy.get('#card-content')
+      .children('.todo-container')
+      .then(todos => {
+        verifyInitialTodoState(todos)
+      })
   })
 
-  it('renders an error message if update failed and no change occurs', () => {
+  it('renders an error message if update failed; no change occurs', () => {
     cy.fixture('todos').then(todosJson => {
       cy.intercept('GET', ApiEndpoints.get(), todosJson).as('todosStub')
     })
