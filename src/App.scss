@@ -1,0 +1,99 @@
+.app-container {
+  background-color: var(--theme-color-light);
+  width: 100vw;
+  min-height: 100vh;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.tag {
+  background-color: white;
+  color: var(--theme-color);
+  padding: 3px 6px;
+  border: 1px solid var(--theme-color);
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+.card {
+  background-color: white;
+  box-sizing: border-box;
+  height: 80vh;
+  box-shadow: var(--box-shadow-theme);
+  margin: 10vh 0;
+  overflow-y: auto;
+  color: var(--grey-800);
+  font-size: 16px;
+  border-radius: 4px;
+}
+
+.card-header {
+  background-color: var(--grey-100);
+  text-align: center;
+  height: 100px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid var(--grey-200);
+
+  h1 {
+    font-size: 36px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--grey-600);
+  }
+}
+
+.todo-container {
+  box-sizing: border-box;
+  height: min-content;
+  label,
+  .chakra-checkbox__label {
+    width: 100%;
+  }
+  display: grid;
+  grid-template-columns: 30px 1fr;
+  align-items: center;
+  justify-content: start;
+  padding: 10px 16px;
+  margin: 0 40px;
+
+  .row {
+    cursor: pointer;
+  }
+
+  &:hover {
+    box-shadow: var(--box-shadow);
+    border-radius: 8px;
+  }
+}
+
+.todo-container--complete {
+  .description {
+    text-decoration: line-through;
+    color: var(--grey-500);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .spinner {
+    animation: spin infinite 20s linear;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
