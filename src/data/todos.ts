@@ -20,6 +20,10 @@ export interface Todos {
   [todoId: string]: Todo
 }
 
+export interface ApiUpdateResponse {
+  status: string
+}
+
 export const adaptTodo = (apiTodo: ApiTodo): Todo => {
   return {
     ...apiTodo,
