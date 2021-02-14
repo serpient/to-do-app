@@ -3,11 +3,11 @@ import './App.scss'
 import { ChakraProvider, Spinner } from '@chakra-ui/react'
 import { TodoCollection } from './components/TodoCollection'
 import { ErrorAlert } from './components/ErrorAlert'
-import { Todos, ApiTodo, sortTodos, adaptTodo } from './data'
+import { Todo, sortTodos, adaptTodo } from './data'
 import { getTodosRequest, updateTodoRequest } from './utils'
 
 const App = () => {
-  const [todos, setTodos] = useState<Todos>({})
+  const [todos, setTodos] = useState<Todo[]>([])
   const [isLoading, setLoaderStatus] = useState<boolean>(true)
   const [error, setError] = useState<string | null>()
 
@@ -16,11 +16,9 @@ const App = () => {
     setLoaderStatus(true)
     getTodosRequest()
       .then(todos => {
-        const adaptedTodos: Todos = {}
-        todos.forEach((todo: ApiTodo) => {
-          adaptedTodos[todo.id] = adaptTodo(todo)
-        })
-        setTodos(adaptedTodos)
+        const adaptedTodos = todos.map(adaptTodo)
+        const sortedTodos = sortTodos(adaptedTodos)
+        setTodos(sortedTodos)
       })
       .catch(err => {
         setError(`${err.name} - ${err.message}`)
@@ -30,28 +28,38 @@ const App = () => {
       })
   }, [])
 
-  const toggleTodoCompletion = async (
-    todoId: string,
+  const toggleTodoCompletion = async ({
+    todoId,
+    currentTodoStatus,
+    currentPosition
+  }: {
+    todoId: string
     currentTodoStatus: boolean
-  ): Promise<void> => {
-    todos[todoId].isUpdating = true
-    setTodos({ ...todos })
+    currentPosition: number
+  }): Promise<void> => {
+    const todosCopy = [...todos]
+    todos[currentPosition].isUpdating = true
+    setTodos(todosCopy)
     setError(null)
+
     const requestBody = JSON.stringify({
       isComplete: !currentTodoStatus
     })
     updateTodoRequest(todoId, requestBody)
       .then(response => {
         if (response.status === 'success') {
-          todos[todoId].isComplete = !currentTodoStatus
-          todos[todoId].isUpdating = false
-          setTodos({ ...todos })
+          const todosCopy = [...todos]
+          todosCopy[currentPosition].isComplete = !currentTodoStatus
+          todosCopy[currentPosition].isUpdating = false
+          const resortedTodos = sortTodos(todosCopy)
+          setTodos(resortedTodos)
         }
       })
       .catch(err => {
         setError(`${err.name} - ${err.message}`)
-        todos[todoId].isUpdating = false
-        setTodos({ ...todos })
+        const todosCopy = [...todos]
+        todosCopy[currentPosition].isUpdating = false
+        setTodos(todosCopy)
       })
   }
 
@@ -75,10 +83,7 @@ const App = () => {
             </div>
           ) : (
             <div id="card-content">
-              <TodoCollection
-                todos={sortTodos(todos)}
-                toggleTodoCompletion={toggleTodoCompletion}
-              />
+              <TodoCollection todos={todos} toggleTodoCompletion={toggleTodoCompletion} />
             </div>
           )}
         </div>

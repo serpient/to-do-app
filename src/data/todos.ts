@@ -16,10 +16,6 @@ export interface Todo {
   isUpdating: boolean
 }
 
-export interface Todos {
-  [todoId: string]: Todo
-}
-
 export interface ApiUpdateResponse {
   status: string
 }
@@ -32,7 +28,7 @@ export const adaptTodo = (apiTodo: ApiTodo): Todo => {
   }
 }
 
-export const sortTodos = (todos: Todos): Todo[] => {
+export const sortTodos = (todos: Todo[]): Todo[] => {
   const overdue: Todo[] = []
   const normal: Todo[] = []
   const completed: Todo[] = []

@@ -8,7 +8,15 @@ export const TodoCollection = ({
   toggleTodoCompletion
 }: {
   todos: Todo[]
-  toggleTodoCompletion: (id: string, isComplete: boolean) => void
+  toggleTodoCompletion: ({
+    todoId,
+    currentTodoStatus,
+    currentPosition
+  }: {
+    todoId: string
+    currentTodoStatus: boolean
+    currentPosition: number
+  }) => Promise<void>
 }): JSX.Element => {
   if (todos.length === 0) {
     return (
@@ -19,14 +27,20 @@ export const TodoCollection = ({
   }
   return (
     <React.Fragment>
-      {todos.map(todo => {
+      {todos.map((todo, todoIdx) => {
         const isCompleteClassName = todo.isComplete ? 'todo-container--complete' : ''
         const isOverdueClassName = isOverdue(todo) ? 'todo-container--overdue' : ''
         return (
           <div
             className={`todo-container ${isCompleteClassName} ${isOverdueClassName}`}
             key={todo.id}
-            onClick={() => toggleTodoCompletion(todo.id, todo.isComplete)}
+            onClick={() =>
+              toggleTodoCompletion({
+                todoId: todo.id,
+                currentTodoStatus: todo.isComplete,
+                currentPosition: todoIdx
+              })
+            }
             role="checkbox"
             aria-checked={todo.isComplete}
           >
