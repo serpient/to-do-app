@@ -2,6 +2,12 @@
 
 ## Quick Start
 
+Create a `.env.local` file and add the api key:
+
+```
+REACT_APP_API_KEY=XXXX_API_KEY_HERE
+```
+
 ```bash
 git clone https://github.com/serpient/to-do-app.git
 cd to-do-app
