@@ -1,14 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import './App.scss'
-import {
-  ChakraProvider,
-  Spinner,
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription
-} from '@chakra-ui/react'
+import { ChakraProvider, Spinner } from '@chakra-ui/react'
 import { TodoCollection } from './components/TodoCollection'
+import { ErrorAlert } from './components/ErrorAlert'
 import { Todos, ApiTodo, sortTodos, adaptTodo } from './data'
 import { getTodosRequest, updateTodoRequest } from './utils'
 
@@ -65,15 +59,7 @@ const App = () => {
     <ChakraProvider>
       <div className="app-container wrapper">
         <div className="card" id="card">
-          {error && (
-            <div className="error">
-              <Alert status="error">
-                <AlertIcon />
-                <AlertTitle mr={2}>Something went wrong!</AlertTitle>
-                <AlertDescription>{error}</AlertDescription>
-              </Alert>
-            </div>
-          )}
+          {error && <ErrorAlert error={error} />}
           <div className="card-header">
             <h1>To Do</h1>
           </div>
