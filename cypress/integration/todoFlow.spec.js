@@ -21,10 +21,10 @@ describe('Get Todo Flow', () => {
     cy.get('#card-content')
       .children('.todo-container')
       .then(todos => {
-        expect(todos[0]).to.contain.text('Buy cat supplies06/24/2020')
+        expect(todos[0]).to.contain.text('Buy cat suppliesOVERDUE06/24/2020')
         expect(todos[0].querySelector('input')).not.to.be.checked
 
-        expect(todos[1]).to.contain.text('Pick up new covid cats06/26/2020')
+        expect(todos[1]).to.contain.text('Pick up new covid catsOVERDUE06/26/2020')
         expect(todos[1].querySelector('input')).not.to.be.checked
 
         expect(todos[2]).to.contain.text('Consider a 3rd cat03/21/2021')

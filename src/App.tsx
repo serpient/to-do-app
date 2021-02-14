@@ -2,15 +2,15 @@ import React, { useEffect, useState } from 'react'
 import './App.scss'
 import {
   ChakraProvider,
-  Checkbox,
   Spinner,
   Alert,
   AlertIcon,
   AlertTitle,
   AlertDescription
 } from '@chakra-ui/react'
+import { TodoCollection } from './components/TodoCollection'
 import { Todos, ApiTodo, sortTodos, adaptTodo } from './data'
-import { getTodosRequest, updateTodoRequest, isOverdue } from './utils'
+import { getTodosRequest, updateTodoRequest } from './utils'
 
 const App = () => {
   const [todos, setTodos] = useState<Todos>({})
@@ -89,7 +89,10 @@ const App = () => {
             </div>
           ) : (
             <div id="card-content">
-              <TodoCollection todos={todos} toggleTodoCompletion={toggleTodoCompletion} />
+              <TodoCollection
+                todos={sortTodos(todos)}
+                toggleTodoCompletion={toggleTodoCompletion}
+              />
             </div>
           )}
         </div>
@@ -99,52 +102,3 @@ const App = () => {
 }
 
 export default App
-
-const TodoCollection = ({
-  todos,
-  toggleTodoCompletion
-}: {
-  todos: Todos
-  toggleTodoCompletion: (id: string, isComplete: boolean) => void
-}): JSX.Element => {
-  if (Object.values(todos).length === 0) {
-    return (
-      <div className="no-todos-container">
-        <h2>Nothing to do here!</h2>
-      </div>
-    )
-  }
-  return (
-    <React.Fragment>
-      {sortTodos(todos).map(todo => {
-        return (
-          <div
-            className={`todo-container ${todo.isComplete ? 'todo-container--complete' : ''} ${
-              isOverdue(todo) ? 'todo-container--overdue' : ''
-            }`}
-            key={todo.id}
-            onClick={() => toggleTodoCompletion(todo.id, todo.isComplete)}
-            role="checkbox"
-            aria-checked={todo.isComplete ? 'true' : 'false'}
-          >
-            {todo.isUpdating ? (
-              <Spinner
-                thickness="4px"
-                speed="0.65s"
-                emptyColor="gray.200"
-                color="gray.500"
-                size="sm"
-              />
-            ) : (
-              <Checkbox isChecked={todo.isComplete} colorScheme="gray" />
-            )}
-            <div className="row">
-              <p className="description">{todo.description}</p>
-              {todo.formattedDueDate && <div className="tag">{todo.formattedDueDate}</div>}
-            </div>
-          </div>
-        )
-      })}
-    </React.Fragment>
-  )
-}
