@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './App.scss'
 import { ChakraProvider, Checkbox, Spinner } from '@chakra-ui/react'
 import { Todos, ApiTodo, Todo, sortTodos, adaptTodo } from './data/todos'
-import { getTodoRequest, updateTodoRequest } from './utils/todoRequest'
+import { getTodoRequest, updateTodoRequest, isOverdue } from './utils'
 
 function App() {
   const [todos, setTodos] = useState<Todos>({})
@@ -58,7 +58,9 @@ function App() {
           {sortTodos(todos).map(todo => {
             return (
               <div
-                className={`todo-container ${todo.isComplete ? 'todo-container--complete' : ''}`}
+                className={`todo-container ${todo.isComplete ? 'todo-container--complete' : ''} ${
+                  isOverdue(todo) ? 'todo-container--overdue' : ''
+                }`}
                 key={todo.id}
                 onClick={() => toggleTodoCompletion(todo.id, todo.isComplete)}
               >
