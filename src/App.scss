@@ -1,5 +1,5 @@
 .app-container {
-  background-color: var(--theme-color-light);
+  background-color: var(--theme-color);
   width: 100vw;
   min-height: 100vh;
 }
@@ -48,7 +48,7 @@
     font-size: 36px;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--grey-600);
+    color: var(--theme-color-light);
   }
 }
 
