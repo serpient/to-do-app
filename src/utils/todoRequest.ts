@@ -3,7 +3,7 @@ import { ApiEndpoints } from './index'
 
 const API_KEY: string = process.env.REACT_APP_API_KEY || ''
 
-export const getTodoRequest = (): Promise<ApiTodo[]> => {
+export const getTodosRequest = (): Promise<ApiTodo[]> => {
   return todoRequest({ endpoint: ApiEndpoints.get(), method: 'GET' })
 }
 

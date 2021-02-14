@@ -1,5 +1,10 @@
 @import './breakpoints.scss';
 
+.center {
+  display: flex;
+  justify-content: center;
+}
+
 .row {
   width: 100%;
   display: flex;
@@ -15,6 +20,16 @@
   border-radius: 6px;
   font-size: 10px;
   font-weight: 500;
+}
+
+.error {
+  height: min-content;
+}
+
+.no-todos-container {
+  text-align: center;
+  color: var(--grey-600);
+  font-size: 18px;
 }
 
 .card {
@@ -90,6 +105,9 @@
   width: 100vw;
   height: 100vh;
   box-sizing: border-box;
+  .chakra-alert {
+    flex-direction: column;
+  }
 
   @media (min-width: $screen-xs) {
     .row {
@@ -113,9 +131,13 @@
     }
 
     .card {
-      margin: 10vh 0px;
-      height: 80vh;
+      margin: 10% 0px;
+      height: 80%;
       border-radius: 4px;
+    }
+
+    .chakra-alert {
+      flex-direction: row;
     }
   }
 }

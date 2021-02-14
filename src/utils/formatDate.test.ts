@@ -1,4 +1,3 @@
-import { format } from 'prettier'
 import { formatDate } from './index'
 
 describe('formatDate', () => {
