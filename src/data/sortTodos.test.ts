@@ -105,4 +105,60 @@ describe('sortTodos', () => {
       }
     ])
   })
+
+  it('sorts normal todos by soonest duedate than todos with no deadline', () => {
+    const todos: Todo[] = [
+      {
+        id: '1',
+        description: 'File 2020 Taxes',
+        isComplete: true,
+        dueDate: '2025-08-05T17:50:44.673Z',
+        formattedDueDate: '08/05/2025',
+        isUpdating: false
+      },
+      {
+        id: '2',
+        description: 'Fold laundry',
+        isComplete: true,
+        dueDate: null,
+        formattedDueDate: null,
+        isUpdating: false
+      },
+      {
+        id: '3',
+        description: 'Call Mom',
+        isComplete: false,
+        dueDate: '2025-07-05T17:50:44.673Z',
+        formattedDueDate: '07/05/2025',
+        isUpdating: false
+      }
+    ]
+
+    expect(sortTodos(todos)).toEqual([
+      {
+        id: '3',
+        description: 'Call Mom',
+        isComplete: false,
+        dueDate: '2025-07-05T17:50:44.673Z',
+        formattedDueDate: '07/05/2025',
+        isUpdating: false
+      },
+      {
+        id: '1',
+        description: 'File 2020 Taxes',
+        isComplete: true,
+        dueDate: '2025-08-05T17:50:44.673Z',
+        formattedDueDate: '08/05/2025',
+        isUpdating: false
+      },
+      {
+        id: '2',
+        description: 'Fold laundry',
+        isComplete: true,
+        dueDate: null,
+        formattedDueDate: null,
+        isUpdating: false
+      }
+    ])
+  })
 })
